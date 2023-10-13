@@ -1,0 +1,8 @@
+configuration:
+  swagger:
+    app: 'Shop Inventory System'
+    description: 'A simple shop inventory system built with Spring Boot'
+    developer: 'Hamza Bakaran'
+    email: 'hamza.bakaran@stu.ibu.edu.ba'
+  mailsender:
+    default: 'sendgrid'
