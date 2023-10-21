@@ -13,11 +13,6 @@ public class Order {
     private List<OrderItem> productIds;
     private Date orderDate = new Date();
 
-    public Order(String id, List<OrderItem> productIds, Date orderDate) {
-        this.id = id;
-        this.productIds = productIds;
-        this.orderDate = orderDate;
-    }
 
     public String getId() {
         return id;
