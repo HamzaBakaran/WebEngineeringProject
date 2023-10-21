@@ -1,32 +1,45 @@
-package ba.edu.ibu.webengineeringproject.core.model;
+package ba.edu.ibu.webengineeringproject.rest.dto;
 
-
+import ba.edu.ibu.webengineeringproject.core.model.Product;
+import ba.edu.ibu.webengineeringproject.core.model.User;
 import ba.edu.ibu.webengineeringproject.core.model.enums.ProductType;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
-@Document
-public class Product {
-    @Id
-    private String id;
+public class ProductRequestDTO {
     private String name;
     private ProductType productType;
     private Double costPrice;
     private Double sellingPrice;
     private String url;
-    private Date addedDate = new Date();
     private Integer quantity;
 
+    public ProductRequestDTO(){}
+    public ProductRequestDTO(Product product) {
 
-    public String getId() {
-        return id;
+        this.name=product.getName();
+        this.productType=product.getProductType();
+        this.costPrice=product.getCostPrice();
+        this.sellingPrice= product.getSellingPrice();
+        this.url= product.getUrl();
+        this.quantity= product.getQuantity();
+
+    }
+    public Product toEntity(){
+        Product product =new Product();
+
+        product.setName(name);
+        product.setProductType(productType);
+        product.setCostPrice(costPrice);
+        product.setSellingPrice(sellingPrice);
+        product.setUrl(url);
+        product.setQuantity(quantity);
+
+        return product;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+
+
 
     public String getName() {
         return name;
@@ -66,14 +79,6 @@ public class Product {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public Date getAddedDate() {
-        return addedDate;
-    }
-
-    public void setAddedDate(Date addedDate) {
-        this.addedDate = addedDate;
     }
 
     public Integer getQuantity() {

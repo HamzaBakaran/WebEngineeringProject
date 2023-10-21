@@ -9,6 +9,7 @@ public class UserDTO {
     private String lastName;
     private String userName;
     private UserType userType;
+    private String email;
 
     public UserDTO(User user) {
         this.id = user.getId();
@@ -19,7 +20,7 @@ public class UserDTO {
         this.email = user.getEmail();
     }
 
-    private String email;
+
 
     public String getUserName() {
         return userName;
