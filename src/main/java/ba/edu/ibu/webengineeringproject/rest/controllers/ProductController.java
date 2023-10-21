@@ -22,10 +22,7 @@ public class ProductController {
         return productService.findAllProducts();
     }
     // Endpoint to find a product by ID
-    @GetMapping("/{productId}")
-    public Product findProductById(@PathVariable int productId) {
-        return (Product) productService.findById(productId);
-    }
+
 
 
 
