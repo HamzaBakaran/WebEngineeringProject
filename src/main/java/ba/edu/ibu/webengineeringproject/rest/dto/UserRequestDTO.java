@@ -9,7 +9,7 @@ public class UserRequestDTO {
     private String firstName;
     private String lastName;
     private String email;
-    private String userName;
+    private String username;
 
     public UserType getUserType() {
         return userType;
@@ -44,11 +44,11 @@ public class UserRequestDTO {
     }
 
     public String getUsername() {
-        return userName;
+        return username;
     }
 
-    public void setUsername(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -68,7 +68,7 @@ public class UserRequestDTO {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.email = user.getEmail();
-        this.userName = user.getUserName();
+        this.username = user.getUsername();
         this.password = user.getPassword();
     }
     public User toEntity() {
@@ -77,7 +77,7 @@ public class UserRequestDTO {
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);
-        user.setUserName(userName);
+        user.setUsername(username);
         user.setPassword(password);
         return user;
     }

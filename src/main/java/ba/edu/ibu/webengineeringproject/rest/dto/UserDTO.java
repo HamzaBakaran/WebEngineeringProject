@@ -7,7 +7,7 @@ public class UserDTO {
     private String id;
     private String firstName;
     private String lastName;
-    private String userName;
+    private String username;
     private UserType userType;
     private String email;
 
@@ -15,7 +15,7 @@ public class UserDTO {
         this.id = user.getId();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
-        this.userName =user.getUserName();
+        this.username =user.getUsername();
         this.userType = user.getUserType();
         this.email = user.getEmail();
     }
@@ -23,11 +23,11 @@ public class UserDTO {
 
 
     public String getUserName() {
-        return userName;
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUserName(String username) {
+        this.username = username;
     }
 
 
