@@ -1,23 +1,34 @@
-package ba.edu.ibu.webengineeringproject.core.model;
+package ba.edu.ibu.webengineeringproject.rest.dto;
 
+import ba.edu.ibu.webengineeringproject.core.model.User;
 import ba.edu.ibu.webengineeringproject.core.model.enums.UserType;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Date;
-
-@Document
-public class User {
-    @Id
+public class UserDTO {
     private String id;
     private String firstName;
     private String lastName;
     private String userName;
-    private String password;
-    private String email;
     private UserType userType;
-    private Date creationDate = new Date();
+    private String email;
 
+    public UserDTO(User user) {
+        this.id = user.getId();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.userName =user.getUserName();
+        this.userType = user.getUserType();
+        this.email = user.getEmail();
+    }
+
+
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
 
     public String getId() {
@@ -44,22 +55,6 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -74,13 +69,5 @@ public class User {
 
     public void setUserType(UserType userType) {
         this.userType = userType;
-    }
-
-    public Date getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
     }
 }

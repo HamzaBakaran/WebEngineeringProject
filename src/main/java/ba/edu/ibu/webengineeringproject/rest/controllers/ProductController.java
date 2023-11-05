@@ -2,12 +2,13 @@ package ba.edu.ibu.webengineeringproject.rest.controllers;
 
 import ba.edu.ibu.webengineeringproject.core.model.Product;
 import ba.edu.ibu.webengineeringproject.core.service.ProductService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import ba.edu.ibu.webengineeringproject.rest.dto.ProductRequestDTO;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/products")
@@ -17,15 +18,31 @@ public class ProductController {
     public ProductController(ProductService productService){
         this.productService=productService;
     }
-    @GetMapping
-    public List<Product> findAllProducts() {
-        return productService.findAllProducts();
+    @RequestMapping(method = RequestMethod.GET, path = "/")
+    public ResponseEntity<List<Product>> getProducts() {
+        return ResponseEntity.ok(productService.findAllProducts());
     }
-    // Endpoint to find a product by ID
-    @GetMapping("/{productId}")
-    public Product findProductById(@PathVariable int productId) {
-        return (Product) productService.findById(productId);
+    @RequestMapping(method = RequestMethod.POST, path = "/register")
+    public ResponseEntity<Product> register(@RequestBody ProductRequestDTO product) {
+        return ResponseEntity.ok(productService.addProduct(product));
     }
+    @RequestMapping(method = RequestMethod.GET, path = "/{id}")
+    public ResponseEntity<Optional<Product>> getProductById(@PathVariable String id) {
+        return ResponseEntity.ok(productService.findById(id));
+    }
+    @RequestMapping(method = RequestMethod.PUT, path = "/{id}")
+    public ResponseEntity<Product> updateUser(@PathVariable String id, @RequestBody ProductRequestDTO product) {
+        return ResponseEntity.ok(productService.updateProduct(id,product));
+    }
+    @RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable String id) {
+        productService.deleteProduct(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
+
+
 
 
 

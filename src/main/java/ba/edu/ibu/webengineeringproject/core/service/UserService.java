@@ -1,51 +1,65 @@
 package ba.edu.ibu.webengineeringproject.core.service;
 
 import ba.edu.ibu.webengineeringproject.core.api.mailsender.MailSender;
+import ba.edu.ibu.webengineeringproject.core.exceptions.repository.ResourceNotFoundException;
 import ba.edu.ibu.webengineeringproject.core.model.Product;
 import ba.edu.ibu.webengineeringproject.core.model.User;
 import ba.edu.ibu.webengineeringproject.core.repository.UserRepository;
+import ba.edu.ibu.webengineeringproject.rest.dto.UserDTO;
+import ba.edu.ibu.webengineeringproject.rest.dto.UserRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class UserService {
     private final UserRepository userRepository;
 
-    /**
-     * Method 1: Using @Autowired with implementation names
-     */
     @Autowired
-    private MailSender mailgunSender;
-/*
-    @Autowired
-    private MailSender sendgridSender;
-*/
+    private MailSender mailSender;
 
-    /**
-     * Method 2: Using @ConditionalOnProperty and application.yml
-     */
-    // @Autowired
-    // private MailSender mailSender;
-
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-    public String sendEmailToAllUsers(String message) {
-        List<User> users = userRepository.findAll();
-        // Method 1: Using a specific implementation name
-        return mailgunSender.send(users, message);
-        // return sendgridSender.send(users, message);
-
-        // Method 2: The appropriate implementation is decided based on configuration
-        // return mailSender.send(users, message);
-    }
-    public List<User> findAllUsers() {
-        return userRepository.findAll();
-    }
-    public  User findById(int id){
-        return userRepository.findById(id);
+    public UserService(UserRepository userRepository,MailSender mailSender)
+    {
+        this.userRepository=userRepository;
+        this.mailSender=mailSender;
     }
 
+    public List<UserDTO> findAllUsers() {
+        List<User> users=userRepository.findAll();
+        return users
+                .stream()
+                .map(UserDTO::new)
+                .collect(toList());
+    }
+
+
+    public  UserDTO findById(String id){
+        Optional<User>user=userRepository.findById(id);
+        if (user.isEmpty()){
+            throw new ResourceNotFoundException("The user with the given ID does not exist.");
+        }
+        return new UserDTO(user.get());
+    }
+    public UserDTO addUser(UserRequestDTO payload) {
+        User user = userRepository.save(payload.toEntity());
+        return new UserDTO(user);
+    }
+    public UserDTO updateUser(String id, UserRequestDTO payload) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isEmpty()) {
+            throw new ResourceNotFoundException("The user with the given ID does not exist.");
+        }
+        User updatedUser = payload.toEntity();
+        updatedUser.setId(user.get().getId());
+        updatedUser = userRepository.save(updatedUser);
+        return new UserDTO(updatedUser);
+    }
+    public void deleteUser(String id) {
+        Optional<User> user = userRepository.findById(id);
+        user.ifPresent(userRepository::delete);
+    }
 }
