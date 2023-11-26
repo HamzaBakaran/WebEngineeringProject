@@ -3,6 +3,7 @@ package ba.edu.ibu.webengineeringproject.core.service;
 import ba.edu.ibu.webengineeringproject.core.exceptions.repository.ResourceNotFoundException;
 import ba.edu.ibu.webengineeringproject.core.model.Order;
 import ba.edu.ibu.webengineeringproject.core.repository.OrderRepository;
+import ba.edu.ibu.webengineeringproject.rest.dto.OrderCustomDTO;
 import ba.edu.ibu.webengineeringproject.rest.dto.OrderRequestDTO;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,11 @@ public class OrderService {
         return orders;
 
     }
+    public List<OrderCustomDTO> findAllCustom(){
+        List<OrderCustomDTO> orders =orderRepository.findAllCustom();
+        return orders;
+    }
+
     public Optional<Order> findById(String id) {
         Optional<Order> order=orderRepository.findById(id);
         if (order.isEmpty()){
@@ -48,5 +54,8 @@ public class OrderService {
     public void deleteOrder(String id){
         Optional<Order> order=orderRepository.findById(id);
         order.ifPresent(orderRepository::delete);
+    }
+    public long countTotalOrders(){
+        return orderRepository.count();
     }
 }

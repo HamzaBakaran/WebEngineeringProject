@@ -13,13 +13,18 @@ public class Order {
     private List<OrderItem> productIds;
     private Date orderDate = new Date();
 
-
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Order(String id, List<OrderItem> productIds, Date orderDate) {
+        this.id = id;
+        this.productIds = productIds;
+        this.orderDate = orderDate;
     }
 
     public List<OrderItem> getProductIds() {
@@ -32,6 +37,10 @@ public class Order {
 
     public Date getOrderDate() {
         return orderDate;
+    }
+
+    public Order( ) {
+
     }
 
     public void setOrderDate(Date orderDate) {
