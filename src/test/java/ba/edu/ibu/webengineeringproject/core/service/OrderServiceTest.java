@@ -16,7 +16,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 @AutoConfigureMockMvc
@@ -28,7 +30,41 @@ class OrderServiceTest {
     OrderService orderService;
     @Test
     public void shouldReturnOrderWhenCreated() {
+        OrderRequestDTO orderRequestDTO = new OrderRequestDTO();
+        Order order = new Order();
+        order.setProductIds(new ArrayList<>());
 
+        Mockito.when(orderRepository.save(ArgumentMatchers.any(Order.class))).thenReturn(order);
+
+        Order savedOrder = orderService.addOrder(orderRequestDTO);
+        Assertions.assertEquals(order, savedOrder);
+
+    }
+    @Test
+    public void shouldFindOrderById() {
+        String orderId = "1";
+        Order order = new Order();
+        order.setId(orderId);
+        order.setProductIds(new ArrayList<>());
+
+        Mockito.when(orderRepository.findById(orderId)).thenReturn(Optional.of(order));
+
+        Optional<Order> foundOrder = orderService.findById(orderId);
+        Assertions.assertTrue(foundOrder.isPresent());
+        Assertions.assertEquals(orderId, foundOrder.get().getId());
+    }
+    @Test
+    public void shouldDeleteOrder() {
+        String orderId = "1";
+        Order existingOrder = new Order();
+        existingOrder.setId(orderId);
+        existingOrder.setProductIds(new ArrayList<>());
+
+        Mockito.when(orderRepository.findById(orderId)).thenReturn(Optional.of(existingOrder));
+
+        orderService.deleteOrder(orderId);
+
+        Mockito.verify(orderRepository, Mockito.times(1)).delete(existingOrder);
     }
 
 }
