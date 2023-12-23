@@ -8,6 +8,9 @@ import ba.edu.ibu.webengineeringproject.core.repository.UserRepository;
 import ba.edu.ibu.webengineeringproject.rest.dto.UserDTO;
 import ba.edu.ibu.webengineeringproject.rest.dto.UserRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -61,5 +64,14 @@ public class UserService {
     public void deleteUser(String id) {
         Optional<User> user = userRepository.findById(id);
         user.ifPresent(userRepository::delete);
+    }
+    public UserDetailsService userDetailsService() {
+        return new UserDetailsService() {
+            @Override
+            public UserDetails loadUserByUsername(String username) {
+                return userRepository.findByUsernameOrEmail(username)
+                        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+            }
+        };
     }
 }

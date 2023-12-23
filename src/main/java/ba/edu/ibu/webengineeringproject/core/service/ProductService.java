@@ -50,5 +50,9 @@ public class ProductService {
         Optional<Product> product=productRepository.findById(id);
         product.ifPresent(productRepository::delete);
     }
+    public long countTotalProducts(){
+        return productRepository.countTotalProducts();
+    }
+
 
 }
