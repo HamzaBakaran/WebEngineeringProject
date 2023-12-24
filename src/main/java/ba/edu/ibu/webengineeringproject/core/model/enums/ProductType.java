@@ -1,5 +1,5 @@
 package ba.edu.ibu.webengineeringproject.core.model.enums;
 
 public enum ProductType {
-    WATCH_ACESSORIES,ELECTRONIC, HOME_APPLIANCE;
+    WATCH_ACESSORIES,ELECTRONIC, HOME_APPLIANCE,SPORT_EQUIPMENT;
 }

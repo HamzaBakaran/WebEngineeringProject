@@ -10,10 +10,8 @@ configuration:
 spring:
   data:
     mongodb:
-      host: localhost
-      port: 27017
+      uri: mongodb+srv://hamzabakaran:developer@inventory.tphzztw.mongodb.net/?retryWrites=true&w=majority
       database: inventory
-
 security:
   jwt:
     secret: '2Rgs9gbpx3eQsiY5YOyQgFnHwThLQf7gp3iMAFDHBH9kHg7nn1Mb5FCf6tXaaR3g'
