@@ -4,6 +4,7 @@ import ba.edu.ibu.webengineeringproject.core.model.User;
 import ba.edu.ibu.webengineeringproject.core.model.enums.UserType;
 
 public class UserDTO {
+
     private String id;
     private String firstName;
     private String lastName;
@@ -16,7 +17,8 @@ public class UserDTO {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.username =user.getUsername();
-        this.userType = user.getUserType();
+        // Set userType to GUEST only if it's null
+        this.userType = (user.getUserType() != null) ? user.getUserType() : UserType.GUEST;
         this.email = user.getEmail();
     }
 
