@@ -6,4 +6,4 @@ FROM openjdk:17.0.1-jdk-slim
 COPY --from=build /target/WebEngineeringProject-0.0.1-SNAPSHOT.jar WebEngineeringProject.jar
 EXPOSE 8080
 
-ENTRYPOINT ["java","-jar","web-engineering.jar"]
+ENTRYPOINT ["java","-jar","WebEngineeringProject.jar"]
