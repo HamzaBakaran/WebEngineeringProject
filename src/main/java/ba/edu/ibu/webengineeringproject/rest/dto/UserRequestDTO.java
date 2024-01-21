@@ -4,6 +4,9 @@ import ba.edu.ibu.webengineeringproject.core.model.User;
 import ba.edu.ibu.webengineeringproject.core.model.enums.UserType;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class UserRequestDTO {
     private UserType userType;
     private String firstName;
@@ -64,7 +67,8 @@ public class UserRequestDTO {
     public  UserRequestDTO() { }
 
     public UserRequestDTO(User user) {
-        this.userType = user.getUserType();
+        // Set userType to GUEST only if it's null
+        this.userType = (user.getUserType() != null) ? user.getUserType() : UserType.GUEST;
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.email = user.getEmail();
@@ -80,5 +84,18 @@ public class UserRequestDTO {
         user.setUsername(username);
         user.setPassword(password);
         return user;
+    }
+    public Map<String, Object> toMap() {
+        Map<String, Object> userAttributes = new HashMap<>();
+        userAttributes.put("userType", userType);
+        userAttributes.put("firstName", firstName);
+        userAttributes.put("lastName", lastName);
+        userAttributes.put("email", email);
+        userAttributes.put("username", username);
+        userAttributes.put("password", password);
+
+
+
+        return userAttributes;
     }
 }

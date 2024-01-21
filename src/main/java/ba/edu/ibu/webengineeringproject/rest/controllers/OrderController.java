@@ -55,7 +55,7 @@ public class OrderController {
         orderService.deleteOrder(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    @RequestMapping(method = RequestMethod.GET, path = "/count")
+    @RequestMapping(method = RequestMethod.GET, path = "/countOrders")
     @PreAuthorize("hasAnyAuthority( 'ADMIN','WORKER')")
     public Map<String, Long> countOrders() {
         long totalOrders = orderService.countTotalOrders();
