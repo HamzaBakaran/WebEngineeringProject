@@ -1,4 +1,7 @@
 # Inventory Management System
+https://development4--loquacious-faun-8f2dee.netlify.app/  
+
+Link to backend swagger   https://web-engineering-inventory.onrender.com/swagger-ui/index.html#/
 
 Link to UI repository
 https://github.com/HamzaBakaran/InventoryUI
